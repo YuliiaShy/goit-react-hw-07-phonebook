@@ -1,14 +1,14 @@
 import { Label, Input } from './Filter.styled';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFilter } from 'redux/state';
-import * as actions from 'redux/actions';
+import { changeFilter } from 'redux/actions';
 
 function Filter() {
   const filterValue = useSelector(getFilter);
   const dispatch = useDispatch();
 
   const onFilterChange = event =>
-    dispatch(actions.changeFilter(event.target.value));
+    dispatch(changeFilter(event.target.value));
   
   return (
     <Label htmlFor="filter">
@@ -18,6 +18,9 @@ function Filter() {
         name="filter"
         value={filterValue}
         onChange={onFilterChange}
+        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        required
       />
     </Label>
   );

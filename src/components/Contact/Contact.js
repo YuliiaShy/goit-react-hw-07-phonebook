@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types';
-import { Items, Button } from './Contact.styled';
-import { useDispatch } from 'react-redux';
-import * as actions from 'redux/actions';
+import { Items, Button, Style} from './Contact.styled';
+import { useDeleteContactMutation } from 'services/API';
 
-function Contact({ id, name, number }) {
-  const dispatch = useDispatch();
-  const onDelete = id => dispatch(actions.deleteContact(id));
+function Contact({ id, name, phone }) {
+  const [onDelete] = useDeleteContactMutation();
+
   return (
     <Items>
-      <p>
-        {name}: {number}
-      </p>
-      <Button type="button" id={id} onClick={() => onDelete(id)}>
+      <p>{name}</p>
+      <Style>
+        <p>{phone}</p>
+      <Button type="button" onClick={() => onDelete(id)}>
         Delete
-      </Button>
+        </Button>
+      </Style>
     </Items>
   );
 }
@@ -21,7 +21,7 @@ function Contact({ id, name, number }) {
 Contact.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
+  phone: PropTypes.string.isRequired,
 };
 
 export default Contact;
