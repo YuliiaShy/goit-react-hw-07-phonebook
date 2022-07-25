@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { Forms, Label, SubmitButton } from 'components/Form/Form.styled';
 import {
@@ -9,9 +9,16 @@ import {
 function Form () {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [addContact] = useAddContactMutation();
+  const [addContact, { isLoading, isSuccess, error }] = useAddContactMutation();
   const { data } = useGetContactsQuery();
+  const [nameForToast, setNameForToast] = useState('');
  
+ useEffect(() => {
+   isSuccess && toast.success(` ${nameForToast} added to phone book`);
+   error && toast.error('oops something went wrong');
+ }, [error, isSuccess, nameForToast]);
+
+
   const inputChange = event => {
     const { name, value } = event.currentTarget;
     switch (name) {
@@ -28,12 +35,14 @@ function Form () {
 
   const formSubmit = event => {
     event.preventDefault();
+    setNameForToast(name);
     if (data.find(
       contact => contact.name.toLowerCase() === name.toLowerCase())) {
-      return toast.warn(`${name} is already in contact`);
-      }
+      return toast.warn(`${name} is already in contacts!`);
       
-   addContact({name, phone})
+      }
+    addContact({ name, phone })
+    
     setName('');
     setPhone('');
   };
@@ -67,7 +76,7 @@ function Form () {
           />
         </Label>
         <SubmitButton type="submit" disabled={phone && name ? false : true}>
-          Add contact
+          {isLoading ? 'Add Contact...' : 'Add Contact'}
         </SubmitButton>
       </Forms>
     );
