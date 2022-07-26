@@ -21,7 +21,7 @@ cursor: pointer;
     background-color: rgb(245, 248, 40);
   &:hover,
   &:focus {
-    background-color: rgb(247, 19, 19);
+    background-color: rgb(255, 0, 0);
   }
 `;
 

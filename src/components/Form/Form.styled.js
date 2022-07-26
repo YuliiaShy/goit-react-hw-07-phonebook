@@ -18,6 +18,9 @@ const SubmitButton = styled.button`
   cursor: pointer;
   border-radius: 4px;
   background-color: rgb(245, 248, 40);
+  &:hover,
+  &:focus {
+    background-color: rgb(0, 175, 0);
 `;
 
 export { Forms, Label, SubmitButton };

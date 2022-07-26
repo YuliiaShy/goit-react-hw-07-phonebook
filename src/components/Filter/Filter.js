@@ -8,7 +8,7 @@ function Filter() {
   const dispatch = useDispatch();
 
   const onFilterChange = event =>
-    dispatch(changeFilter(event.target.value));
+    dispatch(changeFilter(event.currentTarget.value.toLowerCase()));
   
   return (
     <Label htmlFor="filter">
